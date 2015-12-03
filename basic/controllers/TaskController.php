@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Task;
+use app\models\DicUnit;
+use app\models\Category;
 use app\models\TaskSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -61,12 +63,15 @@ class TaskController extends Controller
     public function actionCreate()
     {
         $model = new Task();
-
+        $categories = Category::find()->all();
+        $units = DicUnit::find()->all();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'categories'=>$categories,
+                'units'=>$units,
             ]);
         }
     }
