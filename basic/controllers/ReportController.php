@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Report;
+use app\models\Task;
 use app\models\ReportSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -61,12 +62,13 @@ class ReportController extends Controller
     public function actionCreate()
     {
         $model = new Report();
-
+        $tasks = Task::find(['deleted'=>'0'])->all();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'tasks'=>$tasks,
             ]);
         }
     }

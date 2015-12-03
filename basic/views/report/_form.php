@@ -1,5 +1,5 @@
 <?php
-
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'report_date')->textInput() ?>
 
-    <?= $form->field($model, 'task_id')->textInput() ?>
+    <?=$form->field($model, 'task_id')->dropDownList(ArrayHelper::map($tasks,'id', 'name')) ?>
 
     <?= $form->field($model, 'value')->textInput(['maxlength' => true]) ?>
 
