@@ -46,7 +46,7 @@ class TaskController extends Controller
     /**
      * Displays a single Task model.
      * @param integer $id
-     * @return mixed test
+     * @return mixed
      */
     public function actionView($id)
     {
