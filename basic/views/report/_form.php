@@ -12,8 +12,6 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'create_date')->textInput() ?>
-
     <?= $form->field($model, 'report_date')->textInput() ?>
 
     <?=$form->field($model, 'task_id')->dropDownList(ArrayHelper::map($tasks,'id', 'name')) ?>

@@ -59,4 +59,5 @@ class Report extends \yii\db\ActiveRecord
     public function setTask($value){
         $this->task = $value;
     }
+    
 }

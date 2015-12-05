@@ -34,8 +34,9 @@ class ReportController extends Controller
     public function actionIndex()
     {
         $searchModel = new ReportSearch();
+        
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+            
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -62,6 +63,8 @@ class ReportController extends Controller
     public function actionCreate()
     {
         $model = new Report();
+        $model->create_date = date('Y-m-d');
+        
         $tasks = Task::find(['deleted'=>'0'])->all();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
