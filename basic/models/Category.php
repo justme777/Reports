@@ -46,4 +46,12 @@ class Category extends \yii\db\ActiveRecord
             'user_id' => Yii::t('app', 'User ID'),
         ];
     }
+    
+    public function getCategory(){
+        return $this->hasOne(Category::className(), ['id' => 'parent_id']);
+    }
+    
+    public function setCategory($value){
+       $this->category = $value;
+    }
 }

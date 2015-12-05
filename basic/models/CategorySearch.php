@@ -19,7 +19,7 @@ class CategorySearch extends Category
     {
         return [
             [['id', 'parent_id', 'user_id'], 'integer'],
-            [['name'], 'safe'],
+            [['name','category'], 'safe'],
         ];
     }
 
@@ -42,11 +42,15 @@ class CategorySearch extends Category
     public function search($params)
     {
         $query = Category::find();
-
+        $query->joinWith(['category'=>function($q){ $q->from('categories cat');}]);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
+         $dataProvider->sort->attributes['category']=[
+            'asc'=>['cat.name'=>SORT_ASC],
+            'desc'=>['cat.name'=>SORT_DESC],
+        ];
+        
         $this->load($params);
 
         if (!$this->validate()) {
@@ -60,8 +64,8 @@ class CategorySearch extends Category
             'parent_id' => $this->parent_id,
             'user_id' => $this->user_id,
         ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'cat.name', $this->category]);
+        $query->andFilterWhere(['like', 'categories.name', $this->name]);
 
         return $dataProvider;
     }

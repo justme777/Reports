@@ -12,7 +12,7 @@ use yii\helpers\ArrayHelper;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?=$form->field($model, 'category_id')->dropDownList(ArrayHelper::map($categories,'id', 'Name')) ?>
+    <?=$form->field($model, 'category_id')->dropDownList(ArrayHelper::map($categories,'id', 'name')) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
