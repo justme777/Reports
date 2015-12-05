@@ -15,6 +15,7 @@ use Yii;
  */
 class Report extends \yii\db\ActiveRecord
 {
+   
     /**
      * @inheritdoc
      */
@@ -48,5 +49,14 @@ class Report extends \yii\db\ActiveRecord
             'task_id' => Yii::t('app', 'Task ID'),
             'value' => Yii::t('app', 'Value'),
         ];
+    }
+    
+    public function getTask()
+    {
+        return $this->hasOne(Task::className(), ['id' => 'task_id']);
+    }
+    
+    public function setTask($value){
+        $this->task = $value;
     }
 }

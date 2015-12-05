@@ -19,7 +19,7 @@ class ReportSearch extends Report
     {
         return [
             [['id', 'task_id'], 'integer'],
-            [['create_date', 'report_date', 'value'], 'safe'],
+            [['create_date', 'report_date', 'value', 'task'], 'safe'],
         ];
     }
 
@@ -42,11 +42,15 @@ class ReportSearch extends Report
     public function search($params)
     {
         $query = Report::find();
-
+        $query->joinWith(['task']);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
+        $dataProvider->sort->attributes['task']=[
+            'asc'=>['tasks.name'=>SORT_ASC],
+            'desc'=>['tasks.name'=>SORT_DESC],
+        ];
+        
         $this->load($params);
 
         if (!$this->validate()) {
@@ -61,7 +65,7 @@ class ReportSearch extends Report
             'report_date' => $this->report_date,
             'task_id' => $this->task_id,
         ]);
-
+        $query->andFilterWhere(['like','tasks.name',$this->task]);
         $query->andFilterWhere(['like', 'value', $this->value]);
 
         return $dataProvider;
