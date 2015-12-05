@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "categories".
  *
  * @property integer $id
- * @property string $Name
+ * @property string $name
  * @property integer $parent_id
  * @property integer $user_id
  */
@@ -28,9 +28,9 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Name', 'user_id'], 'required'],
+            [['name', 'user_id'], 'required'],
             [['parent_id', 'user_id'], 'integer'],
-            [['Name'], 'string', 'max' => 50]
+            [['name'], 'string', 'max' => 50]
         ];
     }
 
@@ -41,7 +41,7 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'Name' => Yii::t('app', 'Name'),
+            'name' => Yii::t('app', 'Name'),
             'parent_id' => Yii::t('app', 'Parent ID'),
             'user_id' => Yii::t('app', 'User ID'),
         ];

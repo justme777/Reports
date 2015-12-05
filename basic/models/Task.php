@@ -43,7 +43,7 @@ class Task extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'category_id' => Yii::t('app', 'Category ID'),
-            'name' => Yii::t('app', 'Name'),
+            'name' => Yii::t('app', 'name'),
             'unit_id' => Yii::t('app', 'Unit ID'),
             'deleted' => Yii::t('app', 'Deleted'),
         ];
@@ -55,5 +55,13 @@ class Task extends \yii\db\ActiveRecord
     
     public function setDicUnit($value){
         $this->DicUnit=$value;
+    }
+    
+    public function getCategory(){
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
+    }
+    
+    public function setCategory($value){
+        $this->category = $value;
     }
 }

@@ -19,7 +19,7 @@ class TaskSearch extends Task
     {
         return [
             [['id', 'category_id', 'unit_id', 'deleted'], 'integer'],
-            [['name','dicUnit'], 'safe'],
+            [['name','dicUnit','category'], 'safe'],
         ];
     }
 
@@ -43,6 +43,8 @@ class TaskSearch extends Task
     {
         $query = Task::find();
         $query->joinWith(['dicUnit'=>function($q){ $q->from('dic_units du');}]);
+        $query->joinWith(['category'=>function($q){ $q->from('categories cat');}]);
+        
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -50,6 +52,10 @@ class TaskSearch extends Task
         $dataProvider->sort->attributes['dicUnit']=[
             'asc'=>['du.name'=>SORT_ASC],
             'desc'=>['du.name'=>SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['category']=[
+            'asc'=>['cat.name'=>SORT_ASC],
+            'desc'=>['cat.name'=>SORT_DESC],
         ];
         $this->load($params);
 
@@ -65,7 +71,8 @@ class TaskSearch extends Task
             'unit_id' => $this->unit_id,
             'deleted' => $this->deleted,
         ]);
-        $query->andFilterWhere(['like', 'du.name', $this->dicUnit]);  
+        $query->andFilterWhere(['like', 'du.name', $this->dicUnit]);
+        $query->andFilterWhere(['like', 'cat.name', $this->category]);  
         $query->andFilterWhere(['like', 'tasks.name', $this->name]);
 
         return $dataProvider;
