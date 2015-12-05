@@ -28,9 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'category_id',
             'name',
-            'unit_id',
+            ['attribute'=>'dicUnit',
+            'value'=>'dicUnit.name'],
             'deleted',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

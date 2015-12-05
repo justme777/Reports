@@ -85,12 +85,15 @@ class TaskController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $categories = Category::find()->all();
+        $units = DicUnit::find()->all();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'categories'=>$categories,
+                'units'=>$units,
             ]);
         }
     }

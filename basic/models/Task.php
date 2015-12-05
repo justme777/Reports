@@ -48,4 +48,12 @@ class Task extends \yii\db\ActiveRecord
             'deleted' => Yii::t('app', 'Deleted'),
         ];
     }
+    
+    public function getDicUnit(){
+        return $this->hasOne(DicUnit::className(), ['id' => 'unit_id']);
+    }
+    
+    public function setDicUnit($value){
+        $this->DicUnit=$value;
+    }
 }

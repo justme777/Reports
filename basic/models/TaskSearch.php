@@ -19,7 +19,7 @@ class TaskSearch extends Task
     {
         return [
             [['id', 'category_id', 'unit_id', 'deleted'], 'integer'],
-            [['name'], 'safe'],
+            [['name','dicUnit'], 'safe'],
         ];
     }
 
@@ -42,11 +42,15 @@ class TaskSearch extends Task
     public function search($params)
     {
         $query = Task::find();
-
+        $query->joinWith(['dicUnit'=>function($q){ $q->from('dic_units du');}]);
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
+        $dataProvider->sort->attributes['dicUnit']=[
+            'asc'=>['du.name'=>SORT_ASC],
+            'desc'=>['du.name'=>SORT_DESC],
+        ];
         $this->load($params);
 
         if (!$this->validate()) {
@@ -61,8 +65,8 @@ class TaskSearch extends Task
             'unit_id' => $this->unit_id,
             'deleted' => $this->deleted,
         ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'du.name', $this->dicUnit]);  
+        $query->andFilterWhere(['like', 'tasks.name', $this->name]);
 
         return $dataProvider;
     }
